@@ -1,5 +1,4 @@
 <?php
-
 namespace Database\Seeders;
 
 use App\Models\Ticket;
@@ -20,10 +19,16 @@ class DatabaseSeeder extends Seeder
         Ticket::factory(100)->recycle($users)->create();
 
         // User::factory()->create([
+        //     'name'       => 'The Manager',
+        //     'email'      => 'manager@manager.com',
+        //     'password'   => bcrypt('password'),
+        //     'is_manager' => true,
+        // ]);
+
+        // User::factory()->create([
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
         // ]);
-
 
     }
 }
