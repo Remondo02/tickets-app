@@ -67,13 +67,12 @@ class TicketController extends ApiController
 
             $ticket->update($request->mappedAttributes());
 
+            return new TicketResource($ticket);
         } catch (ModelNotFoundException $exception) {
             return $this->error('Ticket cannot be found.', 404);
         } catch (AuthorizationException) {
             return $this->error('You are not authorized to update that resource', 403);
         }
-
-        return new TicketResource($ticket);
     }
 
     public function replace(ReplaceTicketRequest $request, $ticket_id)
@@ -85,11 +84,11 @@ class TicketController extends ApiController
 
             $ticket->update($request->mappedAttributes());
 
-        } catch (ModelNotFoundException $exception) {
+            return new TicketResource($ticket);
+
+        } catch (ModelNotFoundException) {
             return $this->error('Ticket cannot be found.', 404);
         }
-
-        return new TicketResource($ticket);
     }
 
     /**

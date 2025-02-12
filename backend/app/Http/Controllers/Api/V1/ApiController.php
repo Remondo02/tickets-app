@@ -3,21 +3,13 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
 use App\Traits\ApiResponses;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Gate;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class ApiController extends Controller
 {
-    use ApiResponses;
+    use AuthorizesRequests, ApiResponses;
 
     protected $policyClass;
-
-    public function __construct()
-    {
-        Gate::guessPolicyNamesUsing(function () {
-            return $this->policyClass;
-        });
-    }
 
     public function include(string $relationship): bool
     {
@@ -30,6 +22,10 @@ class ApiController extends Controller
         $includeValues = explode(',', strtolower($param));
 
         return in_array(strtolower($relationship), $includeValues);
+    }
 
+    public function isAble($ability, $targetModel)
+    {
+        return $this->authorize($ability, [$targetModel, $this->policyClass]);
     }
 }
